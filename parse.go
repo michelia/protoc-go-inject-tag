@@ -31,7 +31,7 @@ func (ti tagItems) format() string {
 func (ti tagItems) override(nti tagItems) tagItems {
 	overrided := []tagItem{}
 	for i := range ti {
-		var dup = -1
+		dup := -1
 		for j := range nti {
 			if ti[i].key == nti[j].key {
 				dup = j

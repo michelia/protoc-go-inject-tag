@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"go/format"
 	"log"
 	"os"
 	"path/filepath"
@@ -50,13 +51,17 @@ func main() {
 
 		matched++
 
-		areas, err := parseFile(path, xxxSkipSlice)
+		fset, f, err := parseFile(path, xxxSkipSlice)
 		if err != nil {
 			log.Fatal(err)
 		}
-		if err = writeFile(path, areas); err != nil {
+		file, err := os.Create(path)
+		if err != nil {
 			log.Fatal(err)
 		}
+		defer file.Close()
+		format.Node(file, fset, f)
+
 	}
 
 	if matched == 0 {
